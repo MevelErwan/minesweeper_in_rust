@@ -1,6 +1,8 @@
 extern crate sdl2;
 
 mod mine;
+
+use std::path::Path;
 use sdl2::mouse::MouseButton;
 use mine::*;
 use sdl2::event::Event;
@@ -35,8 +37,12 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     canvas.present();
     let mut event_pump = sdl_context.event_pump().unwrap();
     let mut all_rct: Vec<Vec<Case>> = vec![];
-    let mut _time = [0,0,0];
-    let mut mine_number = get_in_tab( number_mine);
+    let mut _time = 0;
+    let mut mine_number = number_mine;
+    let font_path: &Path = Path::new("./assets/PKMN_RBYGSC.ttf");
+    let ttf_context = sdl2::ttf::init().map_err(|e| e.to_string()).unwrap();
+    let mut font = ttf_context.load_font(font_path, 128).unwrap();
+    font.set_style(sdl2::ttf::FontStyle::BOLD);
         for a in 0..y_case {
             let mut stock: Vec<Case> = Vec::new();
             for e in 0..x_case {
@@ -51,6 +57,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
         let mut redo_mouse_ckick = false;
         let mut redo_left_ckick = false; 
         let texture_location: [Rect; 14] = texture_location();
+    let backgroud_color = Color::RGB(192, 192, 192);
         
     'running: loop {
         remove_see(&mut all_rct);
@@ -140,7 +147,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
                     reset_all(&mut all_rct);
                     setup_mines(&mut all_rct , number_mine, y_case , x_case);
                     setup_number(&mut all_rct, y_case , x_case);
-                    mine_number = get_in_tab( number_mine);
+                    mine_number = number_mine;
                     stop = false;
                     first = true;
                 },
@@ -164,9 +171,8 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
         canvas.clear();
       
         
-        println!("{:?}",mine_number);
         // Render
-        render(&mut canvas, Color::RGB(0, 0, 0), &texture , &mut all_rct , texture_location).unwrap();
+        render(&mut canvas, backgroud_color, &texture , &mut all_rct , texture_location,mine_number,_time,width,&font,&texture_creator).unwrap();
 
         
         std::thread::sleep(Duration::from_millis(16));

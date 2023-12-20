@@ -1,12 +1,12 @@
+use std::string::ToString;
 pub use sdl2::rect::Rect;
 use sdl2::pixels::Color;
 use rand::Rng;
 pub use sdl2::rect::Point;
-use sdl2::render::{WindowCanvas, Texture};
+use sdl2::render::{WindowCanvas, Texture, TextureCreator};
+use sdl2::video::WindowContext;
 
 
-
- 
 #[derive(Debug,Eq,PartialEq)]
 pub struct Case {
     pub rect: Rect,
@@ -23,11 +23,14 @@ impl Case {
         }
     }
 }
+
+const MINE_TEXT: &str = "mine: ";
  
 
-pub fn render(canvas: &mut WindowCanvas, color: Color, texture: &Vec<Texture> , all_rect: &mut Vec<Vec<Case>> , texture_loc : [Rect; 14] ) -> Result<(), String>  {
+pub fn render(canvas: &mut WindowCanvas, color: Color, texture: &Vec<Texture> , all_rect: &mut Vec<Vec<Case>> , texture_loc : [Rect; 14],mine_number:i32 , _time: i32 , width: i32,font: &sdl2::ttf::Font, texture_creator: &TextureCreator<WindowContext> ) -> Result<(), String>  {
     canvas.set_draw_color(color);
     canvas.clear();
+    render_text(    MINE_TEXT.to_string() + mine_number.to_string().as_str() ,font,texture_creator,canvas,width/10 * 8,15,25);
     canvas.set_draw_color(Color{r: 255 , g: 255 , b: 255 , a: 255});
     for a in all_rect {
         for b in a {
@@ -56,6 +59,19 @@ pub fn render(canvas: &mut WindowCanvas, color: Color, texture: &Vec<Texture> , 
     canvas.present();
 
     Ok(())
+}
+fn render_text(text : String, font: &sdl2::ttf::Font, texture_creator: &TextureCreator<WindowContext>, canvas: &mut WindowCanvas, x:i32, y:i32, height:u32) {
+    let surface = font
+        .render(&text)
+        .blended(Color::RGBA(0, 0, 0, 255))
+        .map_err(|e| e.to_string()).unwrap();
+    let texture_font = texture_creator
+        .create_texture_from_surface(&surface)
+        .map_err(|e| e.to_string()).unwrap();
+    let target = Rect::new(x,y,(height/2)*text.len()as u32,height);
+    canvas.copy(&texture_font, None ,target).expect("work");
+
+
 }
 
 
@@ -149,59 +165,21 @@ pub fn unhidden(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, 
     }
 }
 
-pub fn toggle_flag(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, y_length: i32 , y_case: i32 , x_case: i32 , mine_number: &mut Vec<i32>) {
+pub fn toggle_flag(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, y_length: i32 , y_case: i32 , x_case: i32 , mine_number: &mut i32) {
     let (y_to_check,x_to_check) = get_tiles_mouse(all_rect, x, y, x_length, y_length, y_case, x_case);
     
                 if all_rect[y_to_check][x_to_check].action == "hidden".to_string() {
                                     all_rect[y_to_check][x_to_check].action = "flag".to_string();
-                                    decrease_vec_i32(mine_number);
+                                    *mine_number -= 1;
                 } else if all_rect[y_to_check][x_to_check].action == "flag".to_string() {
                     all_rect[y_to_check][x_to_check].action = "hidden".to_string();
-                    increase_vec_i32(mine_number)
+                    *mine_number += 1;
                 }
                 
     
 }
 
-fn decrease_vec_i32(vec_num : &mut Vec<i32>) {
-    vec_num[0] -= 1;
-    let mut next = false;
-    let mut is_below_zero = true;
 
-    for a in vec_num.clone() {
-        if a > 0 {
-            is_below_zero = false;
-        }
-    }
-    
-    
-
-    for a in vec_num {
-        if next {
-            next = false;
-            *a -= 1;
-        }
-        if *a < 0 && !is_below_zero {
-            *a = 9;
-            next = true;
-        }
-    }
-}
-fn increase_vec_i32(vec_num : &mut Vec<i32>) {
-    vec_num[0] += 1;
-    let mut next = false;
-
-    for a in vec_num {
-        if next {
-            next = false;
-            *a += 1;
-        }
-        if *a > 9 {
-            *a = 0;
-            next = true;
-        }
-    }
-}
 
 pub fn unhidden_non_flag(all_rect: &mut Vec<Vec<Case>> , y: usize , x: usize , stop : &mut bool, y_case: i32 , x_case: i32) {
     for add_y in 0..3 {
