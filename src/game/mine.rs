@@ -25,12 +25,15 @@ impl Case {
 }
 
 const MINE_TEXT: &str = "mine: ";
+const TIME_TEXT: &str = "time: ";
  
 
 pub fn render(canvas: &mut WindowCanvas, color: Color, texture: &Vec<Texture> , all_rect: &mut Vec<Vec<Case>> , texture_loc : [Rect; 14],mine_number:i32 , _time: i32 , width: i32,font: &sdl2::ttf::Font, texture_creator: &TextureCreator<WindowContext> ) -> Result<(), String>  {
     canvas.set_draw_color(color);
     canvas.clear();
-    render_text(    MINE_TEXT.to_string() + mine_number.to_string().as_str() ,font,texture_creator,canvas,width/10 * 8,15,25);
+    let base_x_pos = width/16;
+    render_text(    MINE_TEXT.to_string() + mine_number.to_string().as_str() ,font,texture_creator,canvas, base_x_pos* 14,15,25);
+    render_text(TIME_TEXT.to_string() + _time.to_string().as_str() ,font,texture_creator,canvas, base_x_pos,15,25);
     canvas.set_draw_color(Color{r: 255 , g: 255 , b: 255 , a: 255});
     for a in all_rect {
         for b in a {

@@ -38,6 +38,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     let mut event_pump = sdl_context.event_pump().unwrap();
     let mut all_rct: Vec<Vec<Case>> = vec![];
     let mut _time = 0;
+    let mut frame = 0;
     let mut mine_number = number_mine;
     let font_path: &Path = Path::new("./assets/PKMN_RBYGSC.ttf");
     let ttf_context = sdl2::ttf::init().map_err(|e| e.to_string()).unwrap();
@@ -60,6 +61,13 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     let backgroud_color = Color::RGB(192, 192, 192);
         
     'running: loop {
+        if !stop {
+            frame += 1;
+        }
+        if frame == 60 {
+            _time += 1;
+            frame = 0;
+        }
         remove_see(&mut all_rct);
         let state = event_pump.mouse_state();
         for event in event_pump.poll_iter() {
@@ -148,6 +156,8 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
                     setup_mines(&mut all_rct , number_mine, y_case , x_case);
                     setup_number(&mut all_rct, y_case , x_case);
                     mine_number = number_mine;
+                    _time = 0;
+                    frame = 0;
                     stop = false;
                     first = true;
                 },
@@ -170,7 +180,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
         canvas.set_draw_color(Color::RGB(0, 0, 0));
         canvas.clear();
       
-        
+
         // Render
         render(&mut canvas, backgroud_color, &texture , &mut all_rct , texture_location,mine_number,_time,width,&font,&texture_creator).unwrap();
 
