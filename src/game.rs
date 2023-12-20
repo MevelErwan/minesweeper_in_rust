@@ -20,7 +20,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     let video_subsystem = sdl_context.video().unwrap();
 
     let window = video_subsystem
-        .window("Minesweeper", width as u32, height  as u32)
+        .window("Minesweeper", width as u32, height  as u32 + 50)
         .position_centered()
         .build()
         .unwrap();
@@ -35,11 +35,12 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     canvas.present();
     let mut event_pump = sdl_context.event_pump().unwrap();
     let mut all_rct: Vec<Vec<Case>> = vec![];
-
+    let mut _time = [0,0,0];
+    let mut mine_number = get_in_tab( number_mine);
         for a in 0..y_case {
             let mut stock: Vec<Case> = Vec::new();
             for e in 0..x_case {
-                let  case = Case::new((width/x_case)*e , (height/y_case)*a, (width/x_case) as u32 , (height/y_case) as u32);
+                let  case = Case::new((width/x_case)*e , (height/y_case)*a +50, (width/x_case) as u32 , (height/y_case) as u32);
                 stock.push(case)
             }
             all_rct.push(stock);
@@ -68,7 +69,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
                     mouse_btn: MouseButton::Right,
                     ..
                 } => if !stop {
-                    toggle_flag(&mut all_rct , state.x() , state.y() , width/x_case , height/y_case, y_case , x_case);
+                    toggle_flag(&mut all_rct , state.x() , state.y() , width/x_case , height/y_case, y_case , x_case, &mut mine_number);
                 },
                 Event::MouseButtonUp { 
                     mouse_btn: MouseButton::Middle,
@@ -106,7 +107,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
                     keycode: Some(Keycode::E),
                     ..
                 } => if !stop {
-                    toggle_flag(&mut all_rct , state.x() , state.y() , width/x_case , height/y_case, y_case , x_case);
+                    toggle_flag(&mut all_rct , state.x() , state.y() , width/x_case , height/y_case, y_case , x_case, &mut mine_number);
                 },
                 Event::KeyUp { 
                     keycode: Some(Keycode::Z),
@@ -139,6 +140,7 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
                     reset_all(&mut all_rct);
                     setup_mines(&mut all_rct , number_mine, y_case , x_case);
                     setup_number(&mut all_rct, y_case , x_case);
+                    mine_number = get_in_tab( number_mine);
                     stop = false;
                     first = true;
                 },
@@ -160,12 +162,9 @@ pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
         
         canvas.set_draw_color(Color::RGB(0, 0, 0));
         canvas.clear();
-        // Mettez ici le code de votre jeu ou de votre application SDL2
-        
-        // Update
       
         
-
+        println!("{:?}",mine_number);
         // Render
         render(&mut canvas, Color::RGB(0, 0, 0), &texture , &mut all_rct , texture_location).unwrap();
 

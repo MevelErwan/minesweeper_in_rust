@@ -1,6 +1,6 @@
 30 //x_lenght
-24 //y_lenght
-160 //nuber_of_mine
+16 //y_lenght
+99 //nuber_of_mine
 
 //for easy mode
 8

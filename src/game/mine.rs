@@ -149,16 +149,58 @@ pub fn unhidden(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, 
     }
 }
 
-pub fn toggle_flag(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, y_length: i32 , y_case: i32 , x_case: i32 ) {
+pub fn toggle_flag(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32, x_length: i32, y_length: i32 , y_case: i32 , x_case: i32 , mine_number: &mut Vec<i32>) {
     let (y_to_check,x_to_check) = get_tiles_mouse(all_rect, x, y, x_length, y_length, y_case, x_case);
     
                 if all_rect[y_to_check][x_to_check].action == "hidden".to_string() {
                                     all_rect[y_to_check][x_to_check].action = "flag".to_string();
+                                    decrease_vec_i32(mine_number);
                 } else if all_rect[y_to_check][x_to_check].action == "flag".to_string() {
                     all_rect[y_to_check][x_to_check].action = "hidden".to_string();
+                    increase_vec_i32(mine_number)
                 }
                 
     
+}
+
+fn decrease_vec_i32(vec_num : &mut Vec<i32>) {
+    vec_num[0] -= 1;
+    let mut next = false;
+    let mut is_below_zero = true;
+
+    for a in vec_num.clone() {
+        if a > 0 {
+            is_below_zero = false;
+        }
+    }
+    
+    
+
+    for a in vec_num {
+        if next {
+            next = false;
+            *a -= 1;
+        }
+        if *a < 0 && !is_below_zero {
+            *a = 9;
+            next = true;
+        }
+    }
+}
+fn increase_vec_i32(vec_num : &mut Vec<i32>) {
+    vec_num[0] += 1;
+    let mut next = false;
+
+    for a in vec_num {
+        if next {
+            next = false;
+            *a += 1;
+        }
+        if *a > 9 {
+            *a = 0;
+            next = true;
+        }
+    }
 }
 
 pub fn unhidden_non_flag(all_rect: &mut Vec<Vec<Case>> , y: usize , x: usize , stop : &mut bool, y_case: i32 , x_case: i32) {
@@ -259,6 +301,17 @@ fn get_tiles_mouse(all_rect: &mut Vec<Vec<Case>> , x: i32 , y: i32 , x_length: i
         if brk {
             break;
         }
+    }
+    res
+}
+
+pub fn get_in_tab( num : i32) -> Vec<i32> {
+    let mut num = num;
+    let mut res = Vec::new();
+    while num > 0 {
+        let add = num%10;
+        res.push(add);
+        num /= 10;
     }
     res
 }
