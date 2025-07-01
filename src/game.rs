@@ -9,6 +9,7 @@ use sdl2::keyboard::Keycode;
 use sdl2::pixels::{Color};
 use std::time::Duration;
 
+
 pub fn game(x_case: i32 , y_case: i32 , number_mine: i32) {
     
 

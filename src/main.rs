@@ -1,6 +1,4 @@
 mod game;
-
-
 use std::fs;
 use game::*;
 
