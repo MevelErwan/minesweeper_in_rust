@@ -51,7 +51,12 @@ To build and run the Minesweeper game, follow these steps:
 - move setting.txt and assets/ to the application 
 5. Or run the code with `cargo run`
 
+## Screenshot
 
+
+[![](screenshot/playing.png)
+
+[![](screenshot/loosing.png)
 ## Known Issues
 
 - No winning screen

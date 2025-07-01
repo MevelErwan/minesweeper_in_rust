@@ -1,0 +1,11 @@
+C:\Users\merde\OneDrive\Bureau\code\minesweeper_in_rust\target\debug\deps\libgif-be9cef4ad63f2717.rmeta: C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\lib.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\traits.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\common.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\mod.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\decoder.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\encoder.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\../README.md
+
+C:\Users\merde\OneDrive\Bureau\code\minesweeper_in_rust\target\debug\deps\gif-be9cef4ad63f2717.d: C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\lib.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\traits.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\common.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\mod.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\decoder.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\encoder.rs C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\../README.md
+
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\lib.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\traits.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\common.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\mod.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\reader\decoder.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\encoder.rs:
+C:\Users\merde\.cargo\registry\src\index.crates.io-6f17d22bba15001f\gif-0.12.0\src\../README.md:

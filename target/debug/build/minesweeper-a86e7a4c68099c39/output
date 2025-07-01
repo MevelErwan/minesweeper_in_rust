@@ -1,0 +1,3 @@
+cargo:rustc-link-search=native=C:\Users\merde\rustlib
+cargo:rustc-link-lib=static=SDL2
+cargo:rustc-link-lib=static=SDL2main
